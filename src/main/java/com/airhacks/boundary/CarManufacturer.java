@@ -1,5 +1,6 @@
 package com.airhacks.boundary;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.airhacks.control.CarFactory;
@@ -7,6 +8,7 @@ import com.airhacks.control.CarRepository;
 import com.airhacks.entity.Car;
 import com.airhacks.entity.Specification;
 
+@Stateless
 public class CarManufacturer {
 	
 	@Inject
