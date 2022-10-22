@@ -1,6 +1,8 @@
 package com.airhacks.boundary;
 
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
@@ -29,6 +31,10 @@ public class CarManufacturer {
 		carRepository.store(car);
 		carCreated.fire(new CarCreated(car.getIdentifier()));
 		return car;
+	}
+
+	public List<Car> retrieveCars() {
+		return carRepository.loadCars();
 	}
 
 }

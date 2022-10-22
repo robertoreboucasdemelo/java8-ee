@@ -8,7 +8,7 @@ public class CarCreationListener {
 	
 	public void onCarCreation(@Observes CarCreated carCreated) {
 		// .. some logic
-		System.out.printl("new car created with id" + carCreated.getIdentifier());
+		System.out.println("new car created with id" + carCreated.getIdentifier());
 	}
 
 }
