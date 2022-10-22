@@ -11,6 +11,7 @@ import com.airhacks.enums.Color;
 public class CarFactory {
 	
 	@Inject
+	@Diesel
 	Color defaultCarColor;
 	
 	public Car createCar(Specification specification) {

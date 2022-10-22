@@ -7,6 +7,7 @@ import com.airhacks.enums.Color;
 public class DefaultColorExposer {
 	
 	@Produces
+	@Diesel
 	public Color exposeDefaultColor() {
 		//.. some logic
 		return Color.RED;
