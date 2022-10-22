@@ -1,12 +1,19 @@
 package com.airhacks.entity;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
+
 import com.airhacks.enums.Color;
 import com.airhacks.enums.EngineType;
 
 public class Car {
 	
+	@JsonbTransient
 	private String identifier;
+	
 	private Color color;
+	
+	@JsonbProperty("engine")
 	private EngineType engineType;
 	
 	public String getIdentifier() {
@@ -27,6 +34,12 @@ public class Car {
 	public void setEngineType(EngineType engineType) {
 		this.engineType = engineType;
 	}
+	
+	@Override
+	public String toString() {
+		return "Car [identifier=" + identifier + ", color=" + color + ", engineType=" + engineType + "]";
+	}
+	
 	
 
 }
