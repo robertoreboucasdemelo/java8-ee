@@ -9,12 +9,15 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.stream.JsonCollectors;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,8 +40,8 @@ public class CarsResource {
 	UriInfo uriInfo;
 	
 	@GET
-	public JsonArray retrieveCars(){
-		return carManufacturer.retrieveCars()
+	public JsonArray retrieveCars(@NotNull @QueryParam("filter") EngineType engineType){
+		return carManufacturer.retrieveCars(engineType)
 				.stream()
 				.map(c -> Json.createObjectBuilder()
 						.add("color", c.getColor().name())
@@ -50,10 +53,8 @@ public class CarsResource {
 	}
 	
 	@POST
-	public Response createCar(JsonObject jsonObject) {
-		Color color = Color.valueOf(jsonObject.getString("color"));
-		EngineType engine= EngineType.valueOf(jsonObject.getString("engine"));
-		Car car = carManufacturer.manufactureCar(new Specification(color, engine));
+	public Response createCar(@Valid @NotNull Specification specification) {
+		Car car = carManufacturer.manufactureCar(specification);
 		
 		URI uri = uriInfo.getBaseUriBuilder()
 				.path(CarsResource.class)

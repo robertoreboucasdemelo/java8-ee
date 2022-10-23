@@ -13,6 +13,7 @@ import com.airhacks.control.CarRepository;
 import com.airhacks.entity.Car;
 import com.airhacks.entity.CarCreated;
 import com.airhacks.entity.Specification;
+import com.airhacks.enums.EngineType;
 
 @Stateless
 public class CarManufacturer {
@@ -33,7 +34,7 @@ public class CarManufacturer {
 		return car;
 	}
 
-	public List<Car> retrieveCars() {
+	public List<Car> retrieveCars(EngineType engineType) {
 		return carRepository.loadCars();
 	}
 
