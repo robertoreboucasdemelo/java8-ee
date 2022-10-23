@@ -37,4 +37,9 @@ public class CarManufacturer {
 		return carRepository.loadCars();
 	}
 
+	public Car retrieveCar(String identifier) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

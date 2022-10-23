@@ -1,6 +1,7 @@
 package com.airhacks.boundary;
 
 
+import java.net.URI;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,8 +13,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.airhacks.entity.Car;
 import com.airhacks.entity.Specification;
@@ -27,6 +32,9 @@ public class CarsResource {
 	
 	@Inject
 	CarManufacturer carManufacturer;
+	
+	@Context
+	UriInfo uriInfo;
 	
 	@GET
 	public JsonArray retrieveCars(){
@@ -42,9 +50,22 @@ public class CarsResource {
 	}
 	
 	@POST
-	public void createCar(JsonObject jsonObject) {
+	public Response createCar(JsonObject jsonObject) {
 		Color color = Color.valueOf(jsonObject.getString("color"));
 		EngineType engine= EngineType.valueOf(jsonObject.getString("engine"));
-		carManufacturer.manufactureCar(new Specification(color, engine));
+		Car car = carManufacturer.manufactureCar(new Specification(color, engine));
+		
+		URI uri = uriInfo.getBaseUriBuilder()
+				.path(CarsResource.class)
+				.path(CarsResource.class, "retrieveCar")
+				.build(car.getIdentifier());
+		
+		return Response.created(uri).build();
+	}
+	
+	@GET
+	@Path("{id}")
+	public Car retrieveCar(@PathParam("id") String identifier) {
+		return carManufacturer.retrieveCar(identifier)
 	}
 }
