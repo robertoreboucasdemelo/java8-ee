@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +17,7 @@ import com.airhacks.entity.Car;
 import com.airhacks.entity.CarCreated;
 import com.airhacks.entity.Specification;
 import com.airhacks.enums.EngineType;
+import com.airhacks.interceptor.ProcessTrackingInterceptor;
 
 @Stateless
 public class CarManufacturer {
@@ -33,6 +35,7 @@ public class CarManufacturer {
 //	Event<CarCreated> carCreated;
 	
 //	@TransactionAttribute()
+//	@Interceptors(ProcessTrackingInterceptor.class)
 	public Car manufactureCar(Specification specification) {
 		Car car = carFactory.createCar(specification);
 		entityManager.persist(car);
