@@ -41,7 +41,7 @@ public class CarManufacturer {
 
 	public List<Car> retrieveCars(EngineType engineType) {
 		//return carRepository.loadCars();
-		return entityManager.createNamedQuery(null);
+		return entityManager.createNamedQuery(Car.FIND_ALL, Car.class).getResultList();
 	}
 
 	public Car retrieveCar(String identifier) {
