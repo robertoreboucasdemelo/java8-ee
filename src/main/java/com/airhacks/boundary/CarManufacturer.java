@@ -25,7 +25,7 @@ public class CarManufacturer {
 	@Inject
 	CarRepository carRepository;
 	
-	@PersistenceContext
+	@PersistenceContext(unitName="persistenceUnitName")
 	EntityManager entityManager;
 	
 //	@Inject

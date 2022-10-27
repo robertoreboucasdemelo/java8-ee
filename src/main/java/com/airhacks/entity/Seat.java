@@ -1,5 +1,6 @@
 package com.airhacks.entity;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,7 +20,7 @@ public class Seat {
 	@Enumerated(EnumType.STRING)
 	private SeatMaterial seatMaterial;
 	
-	@OneToOne
+	@Embedded
 	private SeatBelt seatBelt;
 	
 	public long getId() {
