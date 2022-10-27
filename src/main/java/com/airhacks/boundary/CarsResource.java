@@ -67,6 +67,6 @@ public class CarsResource {
 	@GET
 	@Path("{id}")
 	public Car retrieveCar(@PathParam("id") String identifier) {
-		return carManufacturer.retrieveCar(identifier)
+		return carManufacturer.retrieveCar(identifier);
 	}
 }

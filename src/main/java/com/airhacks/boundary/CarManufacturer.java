@@ -6,7 +6,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import com.airhacks.control.CarFactory;
 import com.airhacks.control.CarRepository;
@@ -24,18 +25,23 @@ public class CarManufacturer {
 	@Inject
 	CarRepository carRepository;
 	
-	@Inject
-	Event<CarCreated> carCreated;
+	@PersistenceContext
+	EntityManager entityManager;
+	
+//	@Inject
+//	Event<CarCreated> carCreated;
 	
 	public Car manufactureCar(Specification specification) {
 		Car car = carFactory.createCar(specification);
-		carRepository.store(car);
-		carCreated.fire(new CarCreated(car.getIdentifier()));
+		entityManager.persist(car);
+//		carRepository.store(car);
+//		carCreated.fire(new CarCreated(car.getIdentifier()));
 		return car;
 	}
 
 	public List<Car> retrieveCars(EngineType engineType) {
-		return carRepository.loadCars();
+		//return carRepository.loadCars();
+		return entityManager.createNamedQuery(null);
 	}
 
 	public Car retrieveCar(String identifier) {

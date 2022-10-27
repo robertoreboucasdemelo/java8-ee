@@ -20,8 +20,8 @@ public class CarFactory {
 		
 		// Force Exception
 		
-		if (new Random().nextBoolean())
-			throw new CarCreationException("Could Not Create Car!");
+//		if (new Random().nextBoolean())
+//			throw new CarCreationException("Could Not Create Car!");
 		
 		Car car = new Car();
 		car.setIdentifier(UUID.randomUUID().toString());
