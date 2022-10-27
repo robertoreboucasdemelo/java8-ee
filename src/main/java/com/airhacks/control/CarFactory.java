@@ -4,11 +4,13 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import com.airhacks.entity.Car;
 import com.airhacks.entity.Specification;
 import com.airhacks.enums.Color;
 import com.airhacks.exception.CarCreationException;
+import com.airhacks.exception.CarStorageException;
 
 public class CarFactory {
 	
@@ -16,6 +18,7 @@ public class CarFactory {
 	@Diesel
 	Color defaultCarColor;
 	
+//	@Transactional(rollbackOn = CarStorageException.class)
 	public Car createCar(Specification specification) {
 		
 		// Force Exception

@@ -4,6 +4,7 @@ package com.airhacks.boundary;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -31,6 +32,7 @@ public class CarManufacturer {
 //	@Inject
 //	Event<CarCreated> carCreated;
 	
+//	@TransactionAttribute()
 	public Car manufactureCar(Specification specification) {
 		Car car = carFactory.createCar(specification);
 		entityManager.persist(car);
