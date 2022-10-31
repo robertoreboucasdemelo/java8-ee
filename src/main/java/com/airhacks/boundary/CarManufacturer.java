@@ -11,6 +11,7 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.airhacks.cache.CarCache;
 import com.airhacks.control.CarFactory;
 import com.airhacks.control.CarRepository;
 import com.airhacks.entity.ProcessTracker;
@@ -30,6 +31,10 @@ public class CarManufacturer {
 	@Inject
 	CarRepository carRepository;
 	
+	// Download By maven JCache
+	@Inject
+	CarCache carCache;
+	
 	@PersistenceContext(unitName="persistenceUnitName")
 	EntityManager entityManager;
 	
@@ -44,11 +49,13 @@ public class CarManufacturer {
 		entityManager.persist(car);
 //		carRepository.store(car);
 //		carCreated.fire(new CarCreated(car.getIdentifier()));
+//		carCache.cache(car);
 		return car;
 	}
 
 	public List<Car> retrieveCars(EngineType engineType) {
 		//return carRepository.loadCars();
+		//return carCache.retrieveCars();
 		return entityManager.createNamedQuery(Car.FIND_ALL, Car.class).getResultList();
 	}
 
