@@ -13,11 +13,13 @@ import javax.persistence.PersistenceContext;
 
 import com.airhacks.control.CarFactory;
 import com.airhacks.control.CarRepository;
+import com.airhacks.entity.ProcessTracker;
 import com.airhacks.entity.Car;
 import com.airhacks.entity.CarCreated;
 import com.airhacks.entity.Specification;
 import com.airhacks.enums.EngineType;
 import com.airhacks.interceptor.ProcessTrackingInterceptor;
+import com.airhacks.interceptor.Tracked;
 
 @Stateless
 public class CarManufacturer {
@@ -36,6 +38,7 @@ public class CarManufacturer {
 	
 //	@TransactionAttribute()
 //	@Interceptors(ProcessTrackingInterceptor.class)
+	@Tracked(ProcessTracker.Category.MANUFACTURER)
 	public Car manufactureCar(Specification specification) {
 		Car car = carFactory.createCar(specification);
 		entityManager.persist(car);

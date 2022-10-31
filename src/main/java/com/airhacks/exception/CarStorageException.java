@@ -6,7 +6,7 @@ import javax.ejb.ApplicationException;
 public class CarStorageException extends Exception {
 	
 	public CarStorageException(String message) {
-		super(message)
+		super(message);
 	}
 
 }
