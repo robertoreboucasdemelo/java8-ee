@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
@@ -32,6 +33,7 @@ public class CarCache {
 		cache.put(car.getIdentifier(), car);
 	}
 	
+	@Schedule(hour="*")
 	public void loadCars() {
 		List<Car> cars = entityManager.createNamedQuery(Car.FIND_ALL,  Car.class).getResultList();
 		cars.forEach(this::cache);
