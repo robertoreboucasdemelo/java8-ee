@@ -48,8 +48,8 @@ public class CarManufacturer {
 	@PersistenceContext(unitName="persistenceUnitName")
 	EntityManager entityManager;
 	
-//	@Inject
-//	Event<CarCreated> carCreated;
+	@Inject
+	Event<CarCreated> carCreated;
 	
 //	@TransactionAttribute()
 //	@Interceptors(ProcessTrackingInterceptor.class)
@@ -77,6 +77,8 @@ public class CarManufacturer {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+//		carCreated.fireAsync(new CarCreated(car.getIdentifier()));
 		
 		
 		return car;
