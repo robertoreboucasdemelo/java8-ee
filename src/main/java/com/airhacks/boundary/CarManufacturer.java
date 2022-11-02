@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
@@ -51,6 +53,9 @@ public class CarManufacturer {
 	@Inject
 	Event<CarCreated> carCreated;
 	
+	@Resource
+	ManagedExecutorService managed;
+	
 //	@TransactionAttribute()
 //	@Interceptors(ProcessTrackingInterceptor.class)
 	@Tracked(ProcessTracker.Category.MANUFACTURER)
@@ -79,6 +84,8 @@ public class CarManufacturer {
 //		}
 		
 //		carCreated.fireAsync(new CarCreated(car.getIdentifier()));
+		
+//		managed.execute(()-> carProcessor.processNewCar(car));
 		
 		
 		return car;
