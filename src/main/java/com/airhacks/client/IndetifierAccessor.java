@@ -1,5 +1,8 @@
 package com.airhacks.client;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.json.Json;
@@ -8,6 +11,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -22,6 +26,18 @@ public class IndetifierAccessor {
 	private void initClient() {
 		client = ClientBuilder.newClient();
 		target = client.target("https://cars.example.com/cars/identifications");
+	}
+	
+	public List<String> retrieveCarIdentifications(){
+		Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+				.get();
+		
+		GenericType<List<CarIdentifier>> listType = new GenericType<List<CarIdentifier>>() {
+		};
+		
+		return response.readEntity(listType)
+				.stream().map(CarIdentifier::getIdentifier)
+				.collect(Collectors.toList());
 	}
 	
 	public String retrieveCarIdentification(Specification specification) {
@@ -48,6 +64,18 @@ public class IndetifierAccessor {
 	@PreDestroy
 	private void closeClient() {
 		client.close();
+	}
+	
+	private class CarIdentifier {
+		private String identifier;
+
+		public String getIdentifier() {
+			return identifier;
+		}
+
+		public void setIdentifier(String identifier) {
+			this.identifier = identifier;
+		}
 	}
 
 }
