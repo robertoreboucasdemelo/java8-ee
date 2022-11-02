@@ -2,6 +2,8 @@ package com.airhacks.boundary;
 
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -22,6 +24,7 @@ import com.airhacks.enums.EngineType;
 import com.airhacks.interceptor.ProcessTrackingInterceptor;
 import com.airhacks.interceptor.Tracked;
 import com.airhacks.logger.FataLogger;
+import com.airhacks.processor.CarProcessor;
 
 @Stateless
 public class CarManufacturer {
@@ -38,6 +41,9 @@ public class CarManufacturer {
 	
 	@Inject
 	FataLogger fatalLogger;
+	
+	@Inject
+	CarProcessor carProcessor;
 	
 	@PersistenceContext(unitName="persistenceUnitName")
 	EntityManager entityManager;
@@ -60,6 +66,17 @@ public class CarManufacturer {
 //		 } catch(Exception e) {
 //			 fatalLogger.fatal(e);
 //		 }
+		
+//		Future<String> resultFuture = carProcessor.processNewCar(car);
+//		try {
+//			resultFuture.get();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ExecutionException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		
 		return car;
