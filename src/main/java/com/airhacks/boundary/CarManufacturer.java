@@ -21,6 +21,7 @@ import com.airhacks.entity.Specification;
 import com.airhacks.enums.EngineType;
 import com.airhacks.interceptor.ProcessTrackingInterceptor;
 import com.airhacks.interceptor.Tracked;
+import com.airhacks.logger.FataLogger;
 
 @Stateless
 public class CarManufacturer {
@@ -34,6 +35,9 @@ public class CarManufacturer {
 	// Download By maven JCache
 	@Inject
 	CarCache carCache;
+	
+	@Inject
+	FataLogger fatalLogger;
 	
 	@PersistenceContext(unitName="persistenceUnitName")
 	EntityManager entityManager;
@@ -50,6 +54,14 @@ public class CarManufacturer {
 //		carRepository.store(car);
 //		carCreated.fire(new CarCreated(car.getIdentifier()));
 //		carCache.cache(car);
+		
+//		try {
+//			 
+//		 } catch(Exception e) {
+//			 fatalLogger.fatal(e);
+//		 }
+		
+		
 		return car;
 	}
 
