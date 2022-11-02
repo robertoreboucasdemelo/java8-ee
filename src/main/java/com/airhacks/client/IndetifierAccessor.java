@@ -1,10 +1,12 @@
 package com.airhacks.client;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.interceptor.Interceptors;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
@@ -16,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.airhacks.entity.Specification;
+import com.airhacks.interceptor.FailureToNullInterceptor;
 
 @ApplicationScoped
 public class IndetifierAccessor {
@@ -24,26 +27,19 @@ public class IndetifierAccessor {
 	private WebTarget target;
 	
 	private void initClient() {
-		client = ClientBuilder.newClient();
+		client = ClientBuilder.newBuilder()
+				.connectTimeout(1, TimeUnit.SECONDS)
+				.readTimeout(10, TimeUnit.SECONDS)
+				.build();
+		
 		target = client.target("https://cars.example.com/cars/identifications");
 	}
 	
-	public List<String> retrieveCarIdentifications(){
-		Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
-				.get();
-		
-		GenericType<List<CarIdentifier>> listType = new GenericType<List<CarIdentifier>>() {
-		};
-		
-		return response.readEntity(listType)
-				.stream().map(CarIdentifier::getIdentifier)
-				.collect(Collectors.toList());
-	}
-	
+	@Interceptors(FailureToNullInterceptor.class)
 	public String retrieveCarIdentification(Specification specification) {
 		JsonObject entity = buildRequestBody(specification) ;
 		Response response = sendRequest(entity);
-		return (extractIdentifier(response));
+		return (extractIdentifier(response));		
 	}
 	
 	private Response sendRequest(JsonObject entity) {
@@ -59,6 +55,18 @@ public class IndetifierAccessor {
 		return Json.createObjectBuilder()
 				.add("engine", specification.getEngineType().name())
 				.build();
+	}
+	
+	public List<String> retrieveCarIdentifications(){
+		Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+				.get();
+		
+		GenericType<List<CarIdentifier>> listType = new GenericType<List<CarIdentifier>>() {
+		};
+		
+		return response.readEntity(listType)
+				.stream().map(CarIdentifier::getIdentifier)
+				.collect(Collectors.toList());
 	}
 	
 	@PreDestroy
