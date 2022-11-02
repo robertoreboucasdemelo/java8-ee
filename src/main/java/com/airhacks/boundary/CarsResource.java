@@ -4,6 +4,8 @@ package com.airhacks.boundary;
 import java.net.URI;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.enterprise.concurrent.ManagedExecutorService;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -18,6 +20,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,6 +42,9 @@ public class CarsResource {
 	
 	@Context
 	UriInfo uriInfo;
+	
+	@Resource
+	ManagedExecutorService managed;
 	
 	@GET
 	public JsonArray retrieveCars(@NotNull @QueryParam("filter") EngineType engineType){
@@ -68,5 +75,10 @@ public class CarsResource {
 	@Path("{id}")
 	public Car retrieveCar(@PathParam("id") String identifier) {
 		return carManufacturer.retrieveCar(identifier);
+	}
+	
+	@POST
+	public void createCarAsync(Specification specification, @Suspended AsyncResponse asyncResponse) {
+		managed.execute(() -> asyncResponse.resume(createCar(specification)));
 	}
 }
