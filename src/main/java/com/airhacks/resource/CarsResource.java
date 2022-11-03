@@ -1,4 +1,4 @@
-package com.airhacks.boundary;
+package com.airhacks.resource;
 
 
 import java.net.URI;
@@ -27,6 +27,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import com.airhacks.boundary.CarManufacturer;
 import com.airhacks.entity.Car;
 import com.airhacks.entity.Specification;
 import com.airhacks.enums.Color;
