@@ -23,10 +23,10 @@ import com.airhacks.entity.Car;
 import com.airhacks.entity.CarCreated;
 import com.airhacks.entity.Specification;
 import com.airhacks.enums.EngineType;
-import com.airhacks.interceptor.ProcessTrackingInterceptor;
 import com.airhacks.interceptor.Tracked;
 import com.airhacks.logger.FataLogger;
 import com.airhacks.processor.CarProcessor;
+import com.airhacks.validation.ProcessTrackingInterceptor;
 
 @Stateless
 public class CarManufacturer {

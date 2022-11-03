@@ -33,7 +33,7 @@ public class CarCreatedEventsResource {
 	Sse sse;
 	private SseBroadcaster sseBroadcaster;
 	
-	private List<CarCreated> createdCars = new ArrayList<>();
+	private final List<CarCreated> createdCars = new ArrayList<>();
 	
 	@PostConstruct
 	private void initSseBroadcaster() {
